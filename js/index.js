@@ -14,6 +14,23 @@ function resetIndexes(){
     index.push(i);
   }
 }
+function sortingIndexes(){
+  const arr = localStorage.getItem('used').split(',');
+  for(let i=0; i<arr.length; i++){
+    arr[i] = Number(arr[i]);
+  }
+  arr.sort((a,b) => {
+    if (a > b) return -1;
+    if (a === b) return 0;
+    if (a < b) return 1;
+  })
+  return arr;
+}
+function createEmptyBox() {
+  const newDiv = document.createElement('div');
+  newDiv.className = 'card'
+  document.body.appendChild(newDiv);
+}
 function createQuizBox(card){
   const quiz = document.createElement('h2');
   quiz.className = 'quiz'
@@ -55,12 +72,12 @@ function checkNum(){
 }
 function updateLocal(newCard){
   if(localStorage.used !== undefined){
-    const usedNumbers = localStorage.getItem('used')
+    const usedNumbers = localStorage.getItem('used');
     localStorage.setItem('used', `${usedNumbers},${newCard}`);
-    console.log(localStorage.used);
+    console.log('used card: ',localStorage.used);
   } else {
     localStorage.setItem('used', newCard);
-    console.log(localStorage.used);
+    console.log('used card: ', localStorage.used);
   }
   
 }
@@ -74,39 +91,70 @@ function drawCard(){
 function checkRestCards(){
   if(index.length > 0){
     drawCard();
-    console.log('rest cards:', index.length);
   } else {
-    let index = [];
+    index = [];
     for (let i=0; i<cards.length;i++){
       index.push(i);
     }
-    alert("카드를 모두 사용하셨습니다!");
+    localStorage.clear();
+    createEmptyBox();
+    alert("카드를 모두 사용하셨습니다! 카드를 다시 섞을게요!");
   }
+}
+function removePrevCard(){
+  if(document.querySelector('.card')){
+    const oldCard = document.querySelector('.card');
+    oldCard.remove();
+  }
+}
+
+function visibleBtns(){
+  drawBtn.classList.remove('hidden');
+  resetBtn.classList.remove('hidden');
 }
 
 /* base code */
 resetIndexes();
 
+
+/* Event Listeners */
 resetBtn.addEventListener('click', () => {
+  console.log('Reset log!');
   resetIndexes();
   localStorage.clear();
+  removePrevCard();
+  createEmptyBox();
   alert("초기화되었어요!");
 });
 
 drawBtn.addEventListener('click',() => {
-  const oldCard = document.querySelector('.card');
-  oldCard.remove();
-  checkRestCards()
+  removePrevCard();
+  checkRestCards();
 });
 
 continueBtn.addEventListener('click',() => {
-
+  console.log('Continue Game!');
+  if(localStorage.used !== undefined){
+    const arr = sortingIndexes();
+    arr.forEach((idx) => {
+      index.splice(idx, 1);
+    });
+    visibleBtns();
+    removePrevCard();
+    checkRestCards();
+  } else {
+    alert('저장된 게임이 없습니다!');
+  }
+  
 });
 
 newBtn.addEventListener('click', () => {
-  const oldCard = document.querySelector('.card');
-  oldCard.remove();
-  checkRestCards()
+  console.log('New Game!');
+  resetIndexes();
+  localStorage.clear();
+  visibleBtns();
+  removePrevCard();
+  checkRestCards();
 });
 
 

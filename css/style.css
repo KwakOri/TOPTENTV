@@ -29,6 +29,18 @@ body {
   text-align: center;
 }
 
+.card input {
+  font-family: 'CBNUJIKJI';
+  width: 350px;
+  height: 150px;
+  border: none;
+  border-radius: 40px;
+  background-color: #3b9ae1;
+  color: white;
+  font-size: 40px;
+  margin:20px 0;
+}
+
 .btns {
   width: 400px;
   display: flex;
@@ -120,4 +132,8 @@ body {
   font-family: 'GangwonEduPowerExtraBoldA';
   font-size: 60px;
   margin: 30px 0 15px;
+}
+
+.hidden {
+  display: none;
 }
