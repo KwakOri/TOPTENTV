@@ -1,51 +1,19 @@
 import {cards} from './cards.js';
 
-let title = document.querySelector('#title');
-const anchor = document.querySelector('#anchor');
 const drawBtn = document.querySelector('#draw-btn');
 const resetBtn = document.querySelector('#reset-btn');
-let oldCard = document.querySelector('.card');
+const continueBtn = document.querySelector('#continue');
+const newBtn = document.querySelector('#new');
 
-resetBtn.addEventListener('click', () => {
-  localStorage.setItem('used', '0');
-  console.log(localStorage);
-  alert("초기화되었어요!");
-})
-
-
-if(localStorage.getItem('used') === null){
-  localStorage.setItem('used', '0');
-}
-
+let index = [];
 
 // add id prop in card
-for (let i=0; i<cards.length; i++){
-  const card = cards[i];
-  card.id = i+2;
-}
-console.log(cards);
-
-function getRandomNumber(min, max){
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  let num = Math.floor(Math.random() * (max - min) + min);
-  return num;
-
-}
-
-function selectCard(cards, num){
-  let result;
-
+function resetIndexes(){
+  index = [];
   for (let i=0; i<cards.length; i++){
-    const card = cards[i];
-    if(card.id === num){
-      result = card;
-      break;
-    }
+    index.push(i);
   }
-  return result;
 }
-
 function createQuizBox(card){
   const quiz = document.createElement('h2');
   quiz.className = 'quiz'
@@ -72,45 +40,74 @@ function createQuizBox(card){
   
   document.body.appendChild(newDiv);
 }
-
-function DrawCard(){
-
-  // Generate card id
-  let usedNumbers = localStorage.getItem('used');
+function getRandomNumber(min, max){
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  let num = Math.floor(Math.random() * (max - min) + min);
+  return num;
+}
+function checkNum(){
+  let numIdx = getRandomNumber(0, index.length);
+  let cardIdx = index[numIdx];
+  index.splice(numIdx, 1);
   
-  let cardNum = getRandomNumber(2, cards.length+2);
-  if (usedNumbers.split(',').length < cards.length+1){
-    // generate Number
-    while(usedNumbers.includes(cardNum)){
-    cardNum = getRandomNumber(2, cards.length+2);
-    }
+  return cardIdx;
+}
+function updateLocal(newCard){
+  if(localStorage.used !== undefined){
+    const usedNumbers = localStorage.getItem('used')
+    localStorage.setItem('used', `${usedNumbers},${newCard}`);
+    console.log(localStorage.used);
   } else {
-    // clear localStorage
-    alert("남은 카드가 없어요!");
+    localStorage.setItem('used', newCard);
+    console.log(localStorage.used);
   }
   
-  localStorage.setItem('used', `${usedNumbers},${cardNum}`);
-  console.log(localStorage);
-  
-  const selectedCard = selectCard(cards, cardNum);
-  
+}
+function drawCard(){
+  const cardIdx = checkNum();
+  const selectedCard = cards[cardIdx];
+  console.log(selectedCard);
   createQuizBox(selectedCard);
-
+  updateLocal(cardIdx);
+}
+function checkRestCards(){
+  if(index.length > 0){
+    drawCard();
+    console.log('rest cards:', index.length);
+  } else {
+    let index = [];
+    for (let i=0; i<cards.length;i++){
+      index.push(i);
+    }
+    alert("카드를 모두 사용하셨습니다!");
+  }
 }
 
-drawBtn.addEventListener('click',() => {
-  if(oldCard){
-    oldCard.remove();
-  }
-  DrawCard();
-  oldCard = document.querySelector('.card');
+/* base code */
+resetIndexes();
+
+resetBtn.addEventListener('click', () => {
+  resetIndexes();
+  localStorage.clear();
+  alert("초기화되었어요!");
 });
 
+drawBtn.addEventListener('click',() => {
+  const oldCard = document.querySelector('.card');
+  oldCard.remove();
+  checkRestCards()
+});
 
+continueBtn.addEventListener('click',() => {
 
+});
 
-
-
+newBtn.addEventListener('click', () => {
+  const oldCard = document.querySelector('.card');
+  oldCard.remove();
+  checkRestCards()
+});
 
 
 
