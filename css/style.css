@@ -68,6 +68,23 @@ body {
   font-size: 18px;
 }
 
+#rest-cards {
+  position: relative;
+  bottom: -10px;
+  font-family: 'CBNUJIKJI';
+  color: white;
+  font-size: 50px;;
+}
+
+#rest-cards:after {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 50px;
+  content: "rest";
+  font-size: 20px;
+}
+
 .card {
   display: flex;
   flex-direction: column;

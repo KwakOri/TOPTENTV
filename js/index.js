@@ -4,6 +4,7 @@ const drawBtn = document.querySelector('#draw-btn');
 const resetBtn = document.querySelector('#reset-btn');
 const continueBtn = document.querySelector('#continue');
 const newBtn = document.querySelector('#new');
+const restCard = document.querySelector('#rest-cards');
 
 let index = [];
 
@@ -111,10 +112,25 @@ function removePrevCard(){
 function visibleBtns(){
   drawBtn.classList.remove('hidden');
   resetBtn.classList.remove('hidden');
+  restCard.classList.remove('hidden');
+}
+function setRestCardCheckBox(){
+  restCard.innerHTML = '';
+  if(index.length < 10){
+    restCardNum = document.createTextNode('0'+ index.length);
+    restCard.appendChild(restCardNum);
+  }else{
+    restCardNum = document.createTextNode(index.length);
+    restCard.appendChild(restCardNum);
+  }
+  
 }
 
 /* base code */
 resetIndexes();
+
+let restCardNum = document.createTextNode(index.length);
+restCard.appendChild(restCardNum);
 
 
 /* Event Listeners */
@@ -124,12 +140,14 @@ resetBtn.addEventListener('click', () => {
   localStorage.clear();
   removePrevCard();
   createEmptyBox();
+  setRestCardCheckBox()
   alert("초기화되었어요!");
 });
 
 drawBtn.addEventListener('click',() => {
   removePrevCard();
   checkRestCards();
+  setRestCardCheckBox()
 });
 
 continueBtn.addEventListener('click',() => {
@@ -142,6 +160,7 @@ continueBtn.addEventListener('click',() => {
     visibleBtns();
     removePrevCard();
     checkRestCards();
+    setRestCardCheckBox()
   } else {
     alert('저장된 게임이 없습니다!');
   }
@@ -155,6 +174,7 @@ newBtn.addEventListener('click', () => {
   visibleBtns();
   removePrevCard();
   checkRestCards();
+  setRestCardCheckBox()
 });
 
 
