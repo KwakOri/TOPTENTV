@@ -1,0 +1,78 @@
+@font-face {
+  font-family: 'GangwonEduPowerExtraBoldA';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduPowerExtraBoldA.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'CBNUJIKJI';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202@1.0/CBNUJIKJI.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'HBIOS-SYS';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2207-01@1.0/HBIOS-SYS.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'CBNUJIKJI';
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#btn {
+  background-color: gray;
+  border: none;
+  border-radius: 25px;
+  color: white;
+  font-size: 25px;
+  width: 100px;
+  height: 50px;
+  margin: 20px;
+}
+
+.card {
+  font-size: 25px;
+  border-radius: 50px;
+  position: relative;
+  padding: 25px;
+  width: 600px;
+  height: 600px;
+  margin: 20px;
+  background-color: beige;
+}
+
+.first {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card h1 {
+  font-size: 60px;
+}
+
+.opt-box {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 25px;
+}
+
+.opt {
+  padding: 10px;
+}
+
+#title {
+  font-family: 'GangwonEduPowerExtraBoldA';
+  font-size: 60px;
+}
