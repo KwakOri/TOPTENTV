@@ -2,8 +2,16 @@ import {cards} from './cards.js';
 
 let title = document.querySelector('#title');
 const anchor = document.querySelector('#anchor');
-const btn = document.querySelector('#btn');
+const drawBtn = document.querySelector('#draw-btn');
+const resetBtn = document.querySelector('#reset-btn');
 let oldCard = document.querySelector('.card');
+
+resetBtn.addEventListener('click', () => {
+  localStorage.setItem('used', '0');
+  console.log(localStorage);
+  alert("초기화되었어요!");
+})
+
 
 if(localStorage.getItem('used') === null){
   localStorage.setItem('used', '0');
@@ -78,7 +86,7 @@ function DrawCard(){
     }
   } else {
     // clear localStorage
-    alert("You all drawed cards!");
+    alert("남은 카드가 없어요!");
   }
   
   localStorage.setItem('used', `${usedNumbers},${cardNum}`);
@@ -90,7 +98,7 @@ function DrawCard(){
 
 }
 
-btn.addEventListener('click',() => {
+drawBtn.addEventListener('click',() => {
   if(oldCard){
     oldCard.remove();
   }
